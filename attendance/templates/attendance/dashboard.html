@@ -1,0 +1,101 @@
+{% extends 'attendance/base.html' %}
+
+
+
+
+{% block content %}
+
+
+
+<!-- <h2 class="text-center alert alert-success">
+    {% csrf_token %}
+    login as {{ user.username }}
+</h2> -->
+
+
+
+
+<form class="container" action="" method="post">
+    {% csrf_token %}
+    <div class="alert alert-success">
+        <div class="alert row">
+            <div class="col">
+                <div>
+                {{className}}
+                 </div>
+            <div class="row">
+
+                <div>
+                   <h1>{{date1}}</h1>
+                   <h2>{{class.className}}</h2>
+                    <input type="text" id="date1" value = '{{ date1 |date:"Y-m-d" }}' name="date1" hidden>
+                    <input type="text" id="date2" value="{{class.id}}" name="className" hidden>
+                    
+                </div>   
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                student.id
+            </div>   
+            <div class="col">
+                student.name
+            </div>
+            <div class="col">
+                student.class_name
+            </div>
+            <div class="col">
+                student.roll_number
+            </div>
+            <div class="col">
+                Present
+            </div>
+            <div class="col">
+                Absent
+            </div>
+        </div>
+
+    </div>
+    {% for student in students %}
+
+    <div class="alert alert-success">
+        <div class="row">
+
+            <div class="col">
+                {{student.id }}
+            </div>
+
+            
+            <div class="col">
+                {{student.name}}
+            </div>
+
+            <div class="col">
+                {{student.class_name}}
+            </div>
+
+            <div class="col">
+                {{student.roll_number}}
+            </div>
+
+  
+
+            <div class="col">
+                <label for="id_present">Present:</label>
+                <input type="radio" name="{{student.id}}" id="id_present" value="True">
+            </div>
+
+            <div class="col">
+                <label for="id_absent">Absent:</label>
+                <input type="radio" name="{{student.id}}" id="id_absent" value="False" checked>
+            </div>
+        </div>
+
+    </div>
+    {% endfor%}
+    <button class="btn btn-lg bg-success mx-auto "  type="submit">Submit</button>
+
+</form>
+
+{% endblock %}
