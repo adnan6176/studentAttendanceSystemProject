@@ -5,7 +5,8 @@ from . models import Student
 from . models import Attendance
 
 from . models import classID
-
+from . models import Profile
+from . models import TimeTable, DayName
 # class AttendanceAdmin(admin.ModelAdmin):
 #     readonly_fields =('submit_date')
 
@@ -14,4 +15,8 @@ from . models import classID
 admin.site.register(Student)
 admin.site.register(Attendance)
 admin.site.register(classID)
+admin.site.register(Profile)
+admin.site.register(TimeTable)
+admin.site.register(DayName)
+
 # admin.site.register(AttendanceAdmin)

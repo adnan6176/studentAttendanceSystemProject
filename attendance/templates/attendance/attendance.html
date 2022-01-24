@@ -1,4 +1,4 @@
-{% extends 'attendance/home.html' %}
+{% extends 'attendance/orange/blank-page.html' %}
 
 
 
@@ -6,116 +6,74 @@
 {% block content %}
 
 
-{% if user.is_authenticated %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
 
-<div class="container card col">
-
-    <h2 class="text-center alert alert-success">
-        login as {{ user.username }}
-    </h2>
-
-    <form action="{% url 'logoutuser' %}" method="post" class="text-center alert alert-success">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success btn-lg"> Logout</button>
-    </form>
-
-
-</div>
-
-{% else %}
-<div class="container card col">
-    <a href="{% url 'loginuser' %}" type="submit" class="btn btn-success btn-lg"> Login</a>
-</div>
-{% endif %}
-
-
-
-<!-- {{class_x}}
-
-<hr>
-
-{{students}}
-
-<hr>
-
-{{attendances}} -->
-
-<div class="container">
-
-    
-    <form action="" method="get">
-        {% csrf_token %}
-       
-        <div class ="row alert alert-success">
-            <div class="col "> {{class_x.className}}</div>
-            <div class="col">Date:  {{date}}</div>
-           
-        </div>
-        </div>
-        <div class="alert alert-success">
+        <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <span class="badge badge-warning bg-success">Attendance </span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">ID</span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">Roll Number</span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">Name</span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">Present</span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">Date</span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">Teacher</span>
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">Submit</span>
+                    <h3 class="page-title">Attendence</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active">View Attendence</li>
+                    </ul>
                 </div>
             </div>
-
         </div>
-        {% for attendance in attendances %}
 
-        <div class="alert alert-success">
-            <div class="row">
-                <div class="col">
-                    {{attendance.id}}
-                </div>
-                <div class="col">
-                    {{attendance.student_id.id}}
-                </div>
-                <div class="col">
-                    {{attendance.student_id.roll_number}}
-                </div>
-                <div class="col">
-                    {{attendance.student_id.name}}
-                </div>
-                <div class="col">
-                    <span class="badge badge-warning bg-success">{{attendance.present}} </span>
-                </div>
-                <div class="col">
-                    {{attendance.date_present}}
-                </div>
-                <div class="col">
-                    {{attendance.teacher}}
-                </div>
-                <div class="col">
-                    {{attendance.submit_date}}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0"></h4>
+                        <p class="card-text">
+                            {{class_x}} {{date}}
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-stripped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Roll Number</th>
+                                        <th>Present</th>
+                                        <th>Teacher</th>
+                                        <th>Submit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for attendance in attendances %}
+                                    <tr>
+                                        <td>{{attendance.student_id.name}}</td>
+                                        <td>{{attendance.student_id.roll_number}}</td>
+                                        <td><span class="badge badge-warning bg-success">{{attendance.present}} </span>
+                                        </td>
+                                        <td>{{attendance.teacher}}</td>
+                                        <td>{{attendance.submit_date}}</td>
+                                    </tr>
+
+                                    {% endfor%}
+
+
+
+
+
+
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
-        {% endfor%}
-
-    </form>
+    </div>
 </div>
+
 
 
 {% endblock %}
