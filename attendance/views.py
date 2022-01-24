@@ -168,9 +168,10 @@ def makeAttendance(request):
                 v.save()
             else:
                 y.update(student_id = student , present = temp, teacher = request.user , date_present= mydate)
-
-
-
+        user = request.user
+        id = user.profile.id
+        url = f"/employeeDashboard/{id}"
+        return redirect(url) 
         className = classID.objects.all()
         context = {'className':className}
         return render(request,'attendance/currentPage.html',context)
@@ -206,24 +207,24 @@ def employeeDashboard(request,id):
     timetables = TimeTable.objects.filter(teacher = teacher)
     todayDate =  datetime.datetime.today()
     today = datetime.datetime.today().weekday()
-    today_tts = TimeTable.objects.filter(teacher = teacher , day=today)
-    tomorrow_tts = TimeTable.objects.filter(teacher = teacher , day=(today+1)%7)
+    today_tts = TimeTable.objects.filter(teacher = teacher , day=int(today)+1)
+    tomorrow_tts = TimeTable.objects.filter(teacher = teacher , day=(int(today)+2)%7)
 
-    next7day = TimeTable.objects.filter(teacher = teacher , day=(today+2)%7)
+    next7day = TimeTable.objects.filter(teacher = teacher , day=(int(today)+3)%7)
     today = today+3
     for x in range(4):
         today = (int(today)+x)%7
         tts = timetables.filter(day = today).order_by('day')
         next7day = next7day | tts
 
-    dayList =['','Tuesday', 'Wednessday','Thursday','Friday','Saturday','Sunday']
+   
 
 
     today_day = todayDate.strftime("%A")
     today_date = todayDate.date()
-    context = {'teacher':teacher ,'timetables' : timetables , 
+    context = { 'teacher':teacher ,
                 'today_tts' : today_tts , 
-                'tomorrow_tts' : tomorrow_tts,
+                'tomorrow' : tomorrow_tts,
                 'today_date' : today_date,
                 'today_day': today_day,
                 'next7days' :next7day,
@@ -296,6 +297,14 @@ def viewAttendances(request):
     return render(request,'attendance/viewAttendence.html',context)
 
 
+def makeAttendances(request):
+    if request.method == 'POST':
+        temp = request.POST['className']
+        return redirect('dashboard',temp)
+    else:
+        className = classID.objects.all()
+        context = {'className':className}
+    return render(request,'attendance/makeAttendance.html',context)
 
 
 

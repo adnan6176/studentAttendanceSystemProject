@@ -25,14 +25,14 @@
                 <div class="card mb-0">
 
                     <div class="card-body">
-                        <form action="{% url 'viewAttendance' %}" , method="POST">
+                        <form action="{% url 'makeAttendance' %}" ,method="GET">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
  
 
                                     <div class="form-group">
-                                        <label for="className">View Attendance:</label>
+                                        <label for="className">Class:</label>
                                         <select class="select" name="className" id="className">
                                             {% for class in className %}
                                             <option value="{{class.id}}">{{class}}</option>
